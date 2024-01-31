@@ -5,6 +5,7 @@ import com.example.Seminar6Home.service.NoteService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +21,14 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping
-    public List<Note> getAllNotes(){
-        return noteService.getAllNotes();
+    public ResponseEntity<List<Note>> getAll() {
+        return new ResponseEntity<>(noteService.getAllNotes(), HttpStatus.OK);
     }
 
 
     @PostMapping
-    public Note addNote(@RequestBody Note note){
-        return noteService.addNote(note);
+    public ResponseEntity<Note> createProduct(@RequestBody Note note) {
+        return new ResponseEntity<>(noteService.addNote(note), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -45,8 +46,8 @@ public class NoteController {
 
     // наконец то у меня получилось понять! вводим id потом newContent и следом вводим тело заметки
     @PutMapping("/{id}/newContent/{content}")
-    public Note updateNote(@PathVariable Long id,@PathVariable String content){
-        return noteService.updateNote(id,content);
+    public ResponseEntity<Note> updateNote(@PathVariable Long id,@PathVariable String content){
+        return new ResponseEntity<>(noteService.updateNote(id,content), HttpStatus.OK);
     }
 
 
