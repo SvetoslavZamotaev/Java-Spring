@@ -2,6 +2,7 @@ package com.example.sem5_springdata_home_task.service;
 
 import com.example.sem5_springdata_home_task.domain.Task;
 import com.example.sem5_springdata_home_task.domain.TaskStatus;
+import com.example.sem5_springdata_home_task.loggerAspect.TrackUserAction;
 import com.example.sem5_springdata_home_task.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class TaskService {
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
-
+    @TrackUserAction
     public Task addTask(Task task) {
         return taskRepository.save(task);
     }

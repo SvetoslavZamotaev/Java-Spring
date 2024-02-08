@@ -3,6 +3,7 @@ package com.example.sem5_springdata_home_task.loggerAspect;
 import org.apache.el.stream.Stream;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -26,6 +27,12 @@ public class LoggerTerminal {
         Object returnedByMethod = joinPoint.proceed();
         logger.info( joinPoint.getSignature().getName()+" Method executed!!!");
         return returnedByMethod;
+    }
+
+
+    @AfterReturning(value = "@annotation(TrackUserAction)", returning = "returnedValue")
+    public void log(Object returnedValue){
+        logger.info("Annotation works! executed and returned"+ returnedValue);
     }
 
 
