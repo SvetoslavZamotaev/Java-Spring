@@ -5,8 +5,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>microservice2</module>
-		<module>microservice1</module>
-        <module>microservice1</module>
 		<module>mcrservice1</module>
 	</modules>
 	<parent>
