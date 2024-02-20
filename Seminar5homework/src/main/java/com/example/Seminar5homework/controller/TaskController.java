@@ -2,7 +2,10 @@ package com.example.Seminar5homework.controller;
 
 import com.example.Seminar5homework.model.Task;
 import com.example.Seminar5homework.service.TaskService;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +21,11 @@ public class TaskController {
 
     private final TaskService taskService;
 
+    private final Counter requestCounter = Metrics.counter("request_count");
+
     @GetMapping()
     public List<Task> getAllTasks(){
+        requestCounter.increment();
         return taskService.getAllTasks();
     }
 
