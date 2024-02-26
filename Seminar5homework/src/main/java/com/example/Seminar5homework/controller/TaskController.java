@@ -1,6 +1,8 @@
 package com.example.Seminar5homework.controller;
 
+import com.example.Seminar5homework.FactoryMethod.ExampleFabricMethod;
 import com.example.Seminar5homework.model.Task;
+import com.example.Seminar5homework.service.FileGateway;
 import com.example.Seminar5homework.service.TaskService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
@@ -19,6 +21,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TaskController {
 
+
+    private final FileGateway fileGateway;
     private final TaskService taskService;
 
     private final Counter requestCounter = Metrics.counter("request_count");
@@ -36,6 +40,7 @@ public class TaskController {
 
     @PostMapping() public Task addTask(@RequestBody Task task){
         task.setDatetime(LocalDateTime.now());
+        fileGateway.writeToFile(task.getDescription() + ".txt", task.toString());
         return  taskService.createTask(task);
     }
 
